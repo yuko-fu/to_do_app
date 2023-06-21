@@ -2,22 +2,21 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
-    @tasks = task.all
+    @tasks = Task.all
   end
 
   def show
-    @favorite = current_user.favorites.find_by(task_id: @task.id)
   end
 
   def new
-    @task = task.new
+    @task = Task.new
   end
 
   def edit
   end
 
   def create
-    @task = current_user.tasks.build(task_params)
+    @task = Task.new(task_params)
     
     respond_to do |format|
       if @task.save
@@ -53,10 +52,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def confirm
-    @task = current_user.tasks.build(task_params)
-    render :new if @task.invalid?
-  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -65,6 +61,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content, :user)
+      params.require(:task).permit(:task_name, :content)
     end
 end
