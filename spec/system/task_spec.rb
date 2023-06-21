@@ -1,6 +1,7 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
+    #あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
   end
@@ -37,6 +38,11 @@ RSpec.describe 'タスク管理機能', type: :system do
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
         expect(page).to have_content 'task'
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        
       end
     end
   end
