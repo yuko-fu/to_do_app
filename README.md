@@ -1,11 +1,11 @@
 # README
-モデル名 |カラム名     |データ型 |
-|---------|------------|---------|
-|User     |id          |integer  |
-|         |name        |string   |
-|         |email       |string   |
-|         |password    |string   |
-|         |user_id     |integer  |
+モデル名 |カラム名         |データ型 |
+|---------|----------------|---------|
+|User     |id              |integer  |
+|         |name            |string   |
+|         |email           |string   |
+|         |password        |string   |
+|         |password_digest |string  |
 
 
 
