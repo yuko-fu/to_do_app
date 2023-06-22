@@ -5,7 +5,7 @@
 |         |name            |string   |
 |         |email           |string   |
 |         |password        |string   |
-|         |password_digest |string  |
+|         |password_digest |string   |
 
 
 
