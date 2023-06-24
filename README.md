@@ -5,7 +5,7 @@
 |         |name            |string   |
 |         |email           |string   |
 |         |password        |string   |
-|         |password_digest |string  |
+|         |password_digest |string   |
 
 
 
@@ -25,3 +25,18 @@
 |         |label_name |string   |
 |         |task_id    |integer  |
 
+
+Herokuへのデプロイ手順
+１　heroku create でherokuに新しいアプリケーションを作成する
+２　gem 'net-smtp'
+　　gem 'net-imap'
+　　gem 'net-pop'
+　　をGemfileに追加し、bundle installを実行する
+３　git add .
+    git commit -m"コミット名"
+    でコミットする
+４　heroku buildpacks:set heroku/ruby
+　　heroku buildpacks:add --index 1 heroku/nodejs
+　　heroku addons:create heroku-postgresql
+　　を追加で実行する
+５　git push heroku masterまたはgit push heroku ブランチ名:masterでデプロイする
