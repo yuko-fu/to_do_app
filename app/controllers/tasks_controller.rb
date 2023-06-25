@@ -2,7 +2,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
-    @tasks = Task.all.order(created_at: "DESC")
+    @tasks = Task.all#.order(created_at: "DESC")
+    if params[:sort_end].present?
+      @tasks = @tasks.order(end_date: :asc)
+    end
+    render :index
   end
 
   def show
@@ -61,6 +65,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:task_name, :content, :created_at)
+      params.require(:task).permit(:task_name, :content, :created_at, :end_date)
     end
 end

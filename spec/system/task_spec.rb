@@ -53,6 +53,19 @@ RSpec.describe 'タスク管理機能', type: :system do
             expect(task_list.first).to have_content "name2"
       end
     end
+
+    context 'タスクが終了期限順に並んでいる場合' do
+      before do
+        Task.create(task_name: "name1", content: "content1", end_date: 2023, 6, 30)
+        Task.create(task_name: "name2", content: "content2", end_date: 2023,6, 25)
+        Task.create(task_name: "name3", content: "content3", end_date: 2023, 7, 5)
+      end
+      it '期限が近いタスクが一番上に表示される' do
+        visit tasks_path
+        task_list = ('.task_row')
+        expect(task_list.first).to have_content "name2"
+      end
+    end
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
