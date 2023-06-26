@@ -1,10 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  before do
-    #あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-  end
+
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -28,6 +24,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+  
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
@@ -56,13 +53,15 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'タスクが終了期限順に並んでいる場合' do
       before do
-        Task.create(task_name: "name1", content: "content1", end_date: 2023, 6, 30)
-        Task.create(task_name: "name2", content: "content2", end_date: 2023,6, 25)
-        Task.create(task_name: "name3", content: "content3", end_date: 2023, 7, 5)
+        Task.create(task_name: "name1", content: "content1", end_date: '2023-6-30')
+        Task.create(task_name: "name2", content: "content2", end_date: '2023-6-28')
+        Task.create(task_name: "name3", content: "content3", end_date: '2023-7-5')
       end
       it '期限が近いタスクが一番上に表示される' do
         visit tasks_path
-        task_list = ('.task_row')
+        click_on "終了期限でソートする"
+        sleep(1)
+        task_list = all('.task_row')
         expect(task_list.first).to have_content "name2"
       end
     end

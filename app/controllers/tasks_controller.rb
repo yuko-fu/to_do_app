@@ -2,9 +2,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
-    @tasks = Task.all#.order(created_at: "DESC")
+    @tasks = Task.all.order(created_at: "DESC")
     if params[:sort_end].present?
-      @tasks = @tasks.order(end_date: :asc)
+      @tasks = Task.order(end_date: :asc)
     end
     render :index
   end
