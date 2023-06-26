@@ -1,6 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <h1>やること一覧</h1>
+<%= form_with url: root_path, scope: :task, local: true do |f| %>
+  タスク名<%= f.text_field :task_name, placeholder: "検索.." %>
+  
+  <%= f.label :ステータス %>
+  <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択してください" %>
+  <%= f.submit "検索" %>
+<% end %>
 
 
 <table>
@@ -10,7 +17,8 @@
       <th>内容</th>
       <th><%= link_to "終了期限でソートする", tasks_path(sort_end: "true") %></th>
       <th>登録日時</th>
-      <th colspan="3"></th>
+      <th>ステータス</th>
+      <th colspan="完了"></th>
     </tr>
   </head>
 
@@ -20,7 +28,8 @@
         <td class="task_row"><%= task.task_name %></td>
         <td><%= task.content %></td>
         <td><%= task.end_date %></td>
-        <td><%= task.created_at %></td>
+        <td><%= task.created_at.to_s(:datetime_jp) %></td>
+        <td><%= task.status %></td>
         <td><%= link_to '詳細', task %></td>
         <td><%= link_to '編集', edit_task_path(task) %></td>
         <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>

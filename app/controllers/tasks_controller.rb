@@ -2,6 +2,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
+    if params[:task].present?
+      if  @task = Task.where
+      elsif @task = Task.where('task_name like ?', params[:task])
+      elsif @task = Task.where(status, params[:status])
+    end
     @tasks = Task.all.order(created_at: "DESC")
     if params[:sort_end].present?
       @tasks = Task.order(end_date: :asc)
@@ -65,6 +70,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:task_name, :content, :created_at, :end_date)
+      params.require(:task).permit(:task_name, :content, :created_at, :end_date, :status)
     end
 end

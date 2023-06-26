@@ -26,6 +26,10 @@
     <%= form.date_field :end_date %>
   </div>
 
+  <div class="field">
+    <%= form.label :ステータス %>
+    <%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択してください" %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
