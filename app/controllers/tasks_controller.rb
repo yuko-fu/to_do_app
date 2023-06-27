@@ -8,11 +8,11 @@ class TasksController < ApplicationController
     end
     if params[:task].present?
       if  params[:task][:task_name].present? && params[:task][:status].present?
-        @tasks = Task.where('task_name LIKE ?', "%#{params[:task][:task_name]}%").where(status: params[:task][:status])
+        @tasks = Task.task_name_search(params[:task_name]).status_search(params[:status])
       elsif params[:task][:task_name].present?
-        @tasks = Task.where('task_name LIKE ?', "%#{params[:task][:task_name]}%")
+        @tasks = Task.task_name_search("%#{params[:task][:task_name]}%")
       elsif params[:task][:status].present?
-        @tasks = Task.where(status: params[:task][:status])
+        @tasks = Task.status_search(params[:task][:status])
       end
     end
   end

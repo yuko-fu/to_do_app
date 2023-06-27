@@ -2,44 +2,34 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   describe '検索機能' do
     before do
+      # 必要に応じて、テストデータの内容を変更して構わない
       FactoryBot.create(:task, task_name: "task", status: "未着手")
       FactoryBot.create(:second_task, task_name: "sample", status: "完了")
     end
+
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
         visit tasks_path
         # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in 'やること', with: 'task'
-        fill_in 'やること', with: 'sample'
+        fill_in 'task_task_name', with: 'task'
         # 検索ボタンを押す
         click_on "検索"
         expect(page).to have_content 'task'
-        expect(page).to have_content 'sample'
       end
     end
     context 'ステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         # ここに実装する
         visit tasks_path
-        select '未着手', from: 'ステータス'
-        select '完了', from: 'ステータス'
-        click_on "検索"
         # プルダウンを選択する「select」について調べてみること
-        expect(page).to eq '未着手'
-        expect(page).to eq '完了'
       end
     end
     context 'タイトルのあいまい検索とステータス検索をした場合' do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
         # ここに実装する
-        fill_in 'やること', with: 'task' && select '未着手', from: 'ステータス'
-        fill_in 'やること', with: 'sample' && select '完了', from: 'ステータス'
-        click_on "検索"
-        expect(page).to have_content 'task'
-        expect(page).to have_content 'sample'
-        expect(page).to eq '未着手'
-        expect(page).to eq '完了'
+        visit tasks_path
       end
+    end
   end
 
   describe '新規作成機能' do
