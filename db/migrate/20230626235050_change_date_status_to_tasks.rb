@@ -1,5 +1,5 @@
 class ChangeDateStatusToTasks < ActiveRecord::Migration[6.1]
   def change
-    change_column :tasks, :status, :integer
+    change_column :tasks, :status, 'integer USING CAST(status AS integer)'
   end
 end
