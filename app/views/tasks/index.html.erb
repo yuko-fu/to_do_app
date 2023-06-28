@@ -1,30 +1,46 @@
 <p id="notice"><%= notice %></p>
 
 <h1>やること一覧</h1>
+<%= form_with scope: :task, url: root_path, method: :get, local: true do |f| %>
+  やること<%= f.text_field :task_name, placeholder: "検索.." %>
+  <%= f.label :ステータス %>
+  <%= f.select  :status, Task.statuses_i18n.invert, {prompt: "選択してください"} %>
+  <%= f.submit "検索" %>
+<% end %>
 
 
-<table>
+<table class="table table-striped">
   <head>
     <tr>
-      <th>やること</th>
-      <th>内容</th>
-      <th colspan="3"></th>
+      <th scope="col">やること</th>
+      <th scope="col">内容</th>
+      <th scope="col"><%= link_to "終了期限でソートする", tasks_path(sort_end: "true") %></th>
+      <th scope="col">登録日時</th>
+      <th scope="col">ステータス</th>
+      <th scope="col"><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
+      <th colspan="完了"></th>
     </tr>
   </head>
 
   <body>
     <% @tasks.each do |task| %>
       <tr>
-        <td class="task_row"><%= task.task_name %></td>
-        <td><%= task.content %></td>
-        <td><%= link_to '詳細', task %></td>
-        <td><%= link_to '編集', edit_task_path(task) %></td>
-        <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td scope="row" class="task_row"><%= task.task_name %></td>
+        <td scope="row"><%= task.content %></td>
+        <td scope="row"><%= task.end_date %></td>
+        <td scope="row"><%= task.created_at.to_s(:datetime_jp) %></td>
+        <td scope="row"><%= task.status %></td>
+        <td scope="row"><%= task.priority %></td>
+        <td scope="row"><button type="button" class="btn btn-primary"><%= link_to '詳細', task %></button></td>
+        <td scope="row"><button type="button" class="btn btn-success""white" ><%= link_to   '編集', edit_task_path(task) %></button></td>
+        <td scope="row"><button button type="button" class="btn btn-danger"><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></button></td>
       </tr>
     <% end %>
+    <%= paginate @tasks %>
+
   </body>
 </table>
 
 <br>
 
-<%= link_to 'やること追加', new_task_path %>
+<button type="button" class="btn btn-warning" "btn-warning"><%= link_to 'やること追加', new_task_path %></button>
