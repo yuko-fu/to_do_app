@@ -6,6 +6,10 @@ ja:
         waiting: '未着手'
         start: '着手中'
         finish: '完了'
+      priority:
+        high: '高'
+        middle: '中'
+        low: '低'
   activerecord:
     errors:
       messages:

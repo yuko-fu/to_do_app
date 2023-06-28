@@ -6,13 +6,21 @@ class TasksController < ApplicationController
     if params[:sort_end].present?
       @tasks = Task.order(end_date: :asc)
     end
+    if params[:sort_priority].present?
+      @tasks = Task.order(priority: :asc)
+    end
+    @tasks = @tasks.page(params[:page]).per(3)
+
     if params[:task].present?
       if  params[:task][:task_name].present? && params[:task][:status].present?
-        @tasks = Task.task_name_search(params[:task_name]).status_search(params[:status])
-      elsif params[:task][:task_name].present?
-        @tasks = Task.task_name_search("%#{params[:task][:task_name]}%")
-      elsif params[:task][:status].present?
-        @tasks = Task.status_search(params[:task][:status])
+        @tasks = @tasks.task_name_search("%#{params[:task][:task_name]}%")
+        @tasks = @tasks.status_search(params[:task][:status])
+      end
+      if params[:task][:task_name].present?
+        @tasks = @tasks.task_name_search("%#{params[:task][:task_name]}%")
+      end
+      if params[:task][:status].present?
+        @tasks = @tasks.status_search(params[:task][:status])
       end
     end
   end
@@ -73,6 +81,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:task_name, :content, :created_at, :end_date, :status)
+    params.require(:task).permit(:task_name, :content, :created_at, :end_date, :status, :priority)
   end
 end
