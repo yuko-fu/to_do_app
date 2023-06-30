@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
+  skip_before_action :login_required, only: [:new, :create]
 
   def index
     @tasks = Task.all.order(created_at: "DESC")
@@ -36,7 +37,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.task.build(task_params)
     
     respond_to do |format|
       if @task.save

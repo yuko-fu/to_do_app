@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  belongs_to :user
   validates :task_name, presence: true
   validates :content, presence: true
   enum status: {
