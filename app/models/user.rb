@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }
   before_validation { email.downcase! }
   before_destroy :check_last_admin_user
+  before_update :check_update_admin_user
   
   private
 
@@ -15,5 +16,9 @@ class User < ApplicationRecord
       errors.add(:base, "最後の管理ユーザーを削除することはできません")
       throw :abort
     end
+  end
+
+  def check_update_admin_user
+    
   end
 end
