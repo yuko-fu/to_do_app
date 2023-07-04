@@ -35,7 +35,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         select"完了", from: "task_status"
         click_on "検索"
         expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
-        # expect(page).to have_content '未着手'
       end
     end
   end

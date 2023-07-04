@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :login_required, only: [:new, :create]
+  skip_before_action :login_required, only: [:new, :create, :destroy]
   
 
 
@@ -22,6 +22,11 @@ class UsersController < ApplicationController
       render "show"
     else
       redirect_to  new_session_path
+    end
+
+    def destroy
+      User.find(params[:id]).destroy
+      redirect_to admin_users_path, notice:"ユーザー削除しました"
     end
 
   end

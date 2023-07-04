@@ -1,4 +1,23 @@
 <h1>管理画面のユーザー一覧画面だよ！</h1>
-<% @users.each do |user| %>
-  <%= user.id %> : <%= user.name %>
-<% end %>
+<table class="table table-striped">
+  <head>
+    <tr>
+      <th scope="col">ユーザーID</th>
+      <th scope="col">ユーザー名</th>
+    </tr>
+  </head>
+
+  <body>
+    <% @users.each do |user| %>
+      <tr>
+        <th scope="row"><%= user.id %></th> <td scope="row"><%= user.name %>さん</td>
+        <% if current_user.admin?  %> 
+          <td scope="row"><button type="button" class="btn btn-danger">
+          <%= link_to '削除', user, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </button></td>
+        <% end %>
+        
+      </tr>
+    <% end %>
+  </body>
+</table>

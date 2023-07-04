@@ -6,5 +6,14 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, length: { minimum: 6 }
   before_validation { email.downcase! }
+  before_destroy :check_last_admin_user
+  
+  private
 
+  def checkout_last_admin_user
+    if self.admin && User.where(admin: true).count == 1
+      errors.add(:base, "最後の管理ユーザーを削除することはできません")
+      throw :abort
+    end
+  end
 end
