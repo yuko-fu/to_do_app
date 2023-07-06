@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     if @user == current_user
       render "show"
     else
-      redirect_to  new_session_path
+      redirect_to tasks_path
     end
   end
 

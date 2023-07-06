@@ -12,6 +12,7 @@
 <table class="table table-striped">
   <head>
     <tr>
+      <th scope="col">ユーザー名</th>
       <th scope="col">やること</th>
       <th scope="col">内容</th>
       <th scope="col"><%= link_to "終了期限でソートする", tasks_path(sort_end: "true") %></th>
@@ -25,6 +26,7 @@
   <body>
     <% @tasks.each do |task| %>
       <tr>
+        <td scope="row"><%= task.user.name %></td>
         <td scope="row" class="task_row"><%= task.task_name %></td>
         <td scope="row"><%= task.content %></td>
         <td scope="row"><%= task.end_date %></td>

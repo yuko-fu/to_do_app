@@ -1,7 +1,8 @@
 require 'rails_helper'
 RSpec.describe 'タスクモデル機能', type: :model do
   describe '検索機能' do
-    let!(:task) { FactoryBot.create(:task, task_name: "task", status: "未着手")}
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:task) { FactoryBot.create(:task, user: user, task_name: "task", status: "未着手")}
     let!(:second_task) { FactoryBot.create(:second_task, task_name: "sample", status: "完了") }
     context 'scopeメソッドでタイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do

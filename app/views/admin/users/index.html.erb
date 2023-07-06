@@ -14,14 +14,13 @@
         <th scope="row"><%= user.id %></th> <td scope="row"><%= user.name %>さん</td>
         <td>
         <% if current_user.admin? %>
-          <td scope="row"><button type="button" class="btn btn-primary"><%= link_to "詳細", admin_user_path(user) %></button></td>
-          <td scope="row"><button type="button" class="btn btn-success"><%= link_to "編集", edit_admin_user_path(user) %></button></td>
-          <td scope="row"><button type="button" class="btn btn-danger"><%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか?" } %></button></td>
+          <td scope="row"><button id='test_show' type="button" class="btn btn-primary"><%= link_to "詳細", admin_user_path(user) %></button></td>
+          <td scope="row"><button id='test_edit' type="button" class="btn btn-success"><%= link_to "編集", edit_admin_user_path(user) %></button></td>
+          <td scope="row"><button id='test_delete' type="button" class="btn btn-danger"><%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか?" } %></button></td>
         <% end %>
       </td>
-        
       </tr>
     <% end %>
   </body>
 </table>
-<%= link_to "新規ユーザ作成", new_admin_user_path %>
+<%= link_to "新規ユーザー作成", new_admin_user_path %>
