@@ -8,7 +8,7 @@ class User < ApplicationRecord
   before_validation { email.downcase! }
   before_destroy :last_admin_user
   before_update :update_admin_user
-  
+  # enum role: { user: 0, admin: 1 }
   private
 
   def last_admin_user
@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def update_admin_user
-    if User.exists?(admin: true) && self.saved_change_to_admin == [true, false]
+    if self.admin && User.where(admin: true).count == 1
       errors.add(:base, "最後の管理ユーザーは更新できません")
       throw :abort
     end

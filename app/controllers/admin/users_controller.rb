@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create, :destroy, :edit]
   before_action :authenticate_admin!
-  
+
   def index
     @users = User.select(:id, :name)
   end
@@ -15,6 +15,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
+
     @user = User.new(user_params)
     if @user.save
       redirect_to admin_users_path, notice: "ユーザを作成しました。"

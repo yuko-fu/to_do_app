@@ -84,6 +84,7 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         fill_in 'session_email', with: 'admin2@mail.com'
         fill_in 'session_password', with: 'admin2@mail.com'
         click_on 'Log in'
+        sleep(1)
         visit admin_users_path
         click_on '新規ユーザー作成'
         expect(page).to have_content 'ユーザー新規登録'
@@ -103,6 +104,7 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         fill_in 'session_email', with: 'admin4@mail.com'
         fill_in 'session_password', with: 'admin4@mail.com'
         click_on 'Log in'
+        sleep(1)
         visit admin_users_path
         page.all('#test_edit')[1].click_on '編集'
         fill_in 'user_name', with: 'user8'
@@ -116,9 +118,12 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         visit new_session_path
         fill_in 'session_email', with: 'admin5@mail.com'
         fill_in 'session_password', with: 'admin5@mail.com'
-        click_on 'Login'
+        click_on 'Log in'
+        sleep(1)
         visit admin_users_path
+        sleep(1)
         page.all('#test_delete')[1].click_on'削除'
+        page.driver.browser.switch_to.alert.accept    
         expect(page).to have_content 'ユーザを削除しました。'
       end
     end

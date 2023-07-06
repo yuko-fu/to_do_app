@@ -5,6 +5,7 @@ FactoryBot.define do
     end_date { '2023-07-07' }
     status { '完了' }
     priority { '中' }
+    user_id {1}
   end
 
   factory :second_task, class: Task do
@@ -13,5 +14,6 @@ FactoryBot.define do
     end_date { '2023-07-10' }
     status { '未着手' }
     priority { '高' }
+    user_id {2}
   end
 end
