@@ -16,4 +16,14 @@ FactoryBot.define do
     priority { '高' }
     user_id {2}
   end
+  factory :aimai_task, class: Task do
+    task_name { 'aimai' }
+    content { 'aimai２' }
+    end_date { '2023-07-10' }
+    status { '未着手' }
+    priority { '高' }
+    user_id {3}
+  end
+
+
 end

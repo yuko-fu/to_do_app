@@ -9,9 +9,6 @@ class User < ApplicationRecord
   before_destroy :last_admin_user
   before_update :update_admin_user
 
-  # def display_active
-  #   active ? '○' : ''
-  # end
 
   private
 
@@ -24,19 +21,4 @@ class User < ApplicationRecord
     throw :abort if User.exists?(admin: true).count == 1 && self.admin == true
     errors.add(:base, "最後の管理ユーザーを削除できません")
   end
-  
-
-  # def last_admin_user
-  #   if self.admin && User.where(admin: true).count == 1
-  #     errors.add(:base, "最後の管理ユーザーを削除できません")
-  #     throw :abort
-  #   end
-  # end
-
-  # def update_admin_user
-  #   if self.admin && User.where(admin: true).count == 1
-  #     errors.add(:base, "最後の管理ユーザーは更新できません")
-  #     throw :abort
-  #   end
-  # end
 end
