@@ -25,7 +25,3 @@
   <%= @task.priority %>
 </p>
 <%= link_to '一覧に戻る', tasks_path %>
-<% if current_user == @user || current_user.admin? %>
-  <%= link_to "編集", edit_user_path(@user) %>
-  <%= link_to "削除", user_path(@user), method: :delete, data: { confirm: "本当に削除しますか?" } %>
-<% end %>

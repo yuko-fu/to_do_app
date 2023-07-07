@@ -1,13 +1,13 @@
 class Admin::UsersController < ApplicationController
-  skip_before_action :login_required, only: [:new, :create, :destroy, :edit]
   before_action :authenticate_admin!
 
   def index
-    @users = User.select(:id, :name)
+    @users = User.select(:id, :name, :admin)
   end
 
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks
   end
 
   def new
@@ -46,7 +46,7 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email,:password, :password_confirmation, :admin)
   end
 
   def authenticate_admin!

@@ -8,20 +8,35 @@ class User < ApplicationRecord
   before_validation { email.downcase! }
   before_destroy :last_admin_user
   before_update :update_admin_user
-  # enum role: { user: 0, admin: 1 }
+
+  # def display_active
+  #   active ? '○' : ''
+  # end
+
   private
 
-  def last_admin_user
-    if self.admin && User.where(admin: true).count == 1
-      errors.add(:base, "最後の管理ユーザーを削除できません")
-      throw :abort
-    end
+  def admin_cannot_update
+    throw :abort if User.exists?(admin: true).count == 1 && self.saved_change_to_admin == [true, false]
+    errors.add(:base, "最後の管理ユーザーを編集できません")
   end
+  
+  def admin_cannot_delete
+    throw :abort if User.exists?(admin: true).count == 1 && self.admin == true
+    errors.add(:base, "最後の管理ユーザーを削除できません")
+  end
+  
 
-  def update_admin_user
-    if self.admin && User.where(admin: true).count == 1
-      errors.add(:base, "最後の管理ユーザーは更新できません")
-      throw :abort
-    end
-  end
+  # def last_admin_user
+  #   if self.admin && User.where(admin: true).count == 1
+  #     errors.add(:base, "最後の管理ユーザーを削除できません")
+  #     throw :abort
+  #   end
+  # end
+
+  # def update_admin_user
+  #   if self.admin && User.where(admin: true).count == 1
+  #     errors.add(:base, "最後の管理ユーザーは更新できません")
+  #     throw :abort
+  #   end
+  # end
 end

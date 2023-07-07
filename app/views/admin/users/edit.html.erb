@@ -13,5 +13,8 @@
   <%= f.label :パスワード確認用 %>
   <%= f.password_field :password_confirmation %>
 
+  <%= f.label :管理者権限 %>
+  <%= f.check_box :admin %>
+
   <%= f.submit "編集完了" %>
 <% end %>

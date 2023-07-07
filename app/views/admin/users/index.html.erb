@@ -2,6 +2,7 @@
 <table class="table table-striped">
   <head>
     <tr>
+      <th scope="col">管理者権限</th>
       <th scope="col">ユーザーID</th>
       <th scope="col">ユーザー名</th>
       <th scope="col">タスク数</th>
@@ -12,8 +13,10 @@
   <body>
     <% @users.each do |user| %>
       <tr>
+        <td><%= user.admin %></td>
         <th scope="row"><%= user.id %></th> 
         <td scope="row"><%= user.name %>さん</td>
+        <td scope="row"><%= user.task_ids.count %></td>
         
         <td>
         <% if current_user.admin? %>
