@@ -16,6 +16,7 @@ gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
 gem 'enum_help'
+gem 'pry-rails'
 
 
 
@@ -45,4 +46,5 @@ end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'kaminari'
+gem 'bcrypt'
 

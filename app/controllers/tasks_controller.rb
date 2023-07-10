@@ -1,15 +1,16 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
+  skip_before_action :login_required, only: [:new, :create]
 
   def index
-    @tasks = Task.all.order(created_at: "DESC")
+    @tasks = current_user.tasks.order(created_at: "DESC")
     if params[:sort_end].present?
-      @tasks = Task.order(end_date: :asc)
+      @tasks = current_user.tasks.order(end_date: :asc)
     end
     if params[:sort_priority].present?
-      @tasks = Task.order(priority: :asc)
+      @tasks = current_user.tasks.order(priority: :asc)
     end
-    @tasks = @tasks.page(params[:page]).per(3)
+    @tasks = @tasks.page(params[:page]).per(10)
 
     if params[:task].present?
       if  params[:task][:task_name].present? && params[:task][:status].present?
@@ -26,6 +27,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @task = Task.find(params[:id])
   end
 
   def new
@@ -33,10 +35,11 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = Task.find(params[:id])
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     
     respond_to do |format|
       if @task.save
@@ -81,6 +84,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:task_name, :content, :created_at, :end_date, :status, :priority)
+    params.require(:task).permit(:task_name, :content, :created_at, :end_date, :status, :priority, :user_id)
   end
 end
