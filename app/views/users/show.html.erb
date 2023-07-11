@@ -9,6 +9,7 @@
       <th scope="col">ユーザー名</th>
       <th scope="col">やること</th>
       <th scope="col">内容</th>
+      <th scope="col">ラベル</th>
       <th scope="col"><%= link_to "終了期限でソートする", tasks_path(sort_end: "true") %></th>
       <th scope="col">登録日時</th>
       <th scope="col">ステータス</th>
@@ -23,6 +24,11 @@
       <td scope="row"><%= task.user.name %></td>
       <td scope="row" class="task_row"><%= task.task_name %></td>
       <td scope="row"><%= task.content %></td>
+      <td scope="row">
+        <% task.labels.each do |label| %>
+          <%= label.name %>
+        <% end %>
+      </td>
       <td scope="row"><%= task.end_date %></td>
       <td scope="row"><%= task.created_at.to_s(:datetime_jp) %></td>
       <td scope="row"><%= task.status %></td>
