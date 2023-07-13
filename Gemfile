@@ -17,7 +17,7 @@ gem 'net-imap'
 gem 'net-pop'
 gem 'enum_help'
 gem 'pry-rails'
-
+gem 'faker'
 
 
 group :development, :test do
@@ -26,7 +26,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'launchy'
   # gem 'rexml'
 end

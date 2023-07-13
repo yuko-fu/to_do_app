@@ -15,8 +15,10 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         # タスクの検索欄に検索ワードを入力する (例: task)
         fill_in 'task_task_name', with: 'ta'
+        
         # 検索ボタンを押す
         click_on "検索"
+        sleep(1)
         expect(page).to have_content 'Factoryで作ったデフォルトのコンテント１'
       end
     end
@@ -25,6 +27,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # ここに実装する
         visit tasks_path
         select"未着手", from: "task_status"
+        
         click_on "検索"
         # プルダウンを選択する「select」について調べてみること
         expect(page).to have_content '未着手'
@@ -34,14 +37,47 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
         # ここに実装する
         visit tasks_path
+        sleep(1)
         fill_in 'task_task_name', with: 'sa' 
         select"完了", from: "task_status"
+        
         click_on "検索"
+        
         expect(page).to have_content 'Factoryで作ったデフォルトのコンテント２'
       end
     end
   end
 
+  describe 'ラベル機能' do
+    let!(:label) { FactoryBot.create(:label, name: "label3") }
+    let!(:user) { FactoryBot.create(:user) }
+    
+    before do
+      visit new_session_path
+      fill_in 'session_email', with: 'dpro@mail.com'
+      fill_in 'session_password', with: 'dpro@mail.com'
+      click_on 'Log in'
+    end
+    context 'タスク作成画面でラベルを選択すると' do
+      it '詳細画面に選択したラベルが表示される' do
+        visit new_task_path
+        sleep(1)
+        fill_in 'task_task_name', with: 'テスト'
+        fill_in 'task_content', with: 'テストコンテント'
+        check "label3"
+        select"完了", from: "task_status"
+        select"高", from: "task_priority"
+        
+        click_on '登録する'
+        # binding.pry
+        
+        sleep(1)
+        click_on '一覧に戻る'
+        expect(page).to have_content "label3"
+      end
+    end
+  end
+  
   describe '新規作成機能' do
     let!(:user) { FactoryBot.create(:user) }
     let!(:task) { FactoryBot.create(:task, user: user, task_name: "task", status: "未着手")}
@@ -54,23 +90,15 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
-        # 1. new_task_pathに遷移する（新規作成ページに遷移する）
-        # ここにnew_task_pathにvisitする処理を書く
         visit new_task_path
-        # 2. 新規登録内容を入力する
-        #「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄にタスクのタイトルと内容をそれぞれ入力する
-        # ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-        # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
+      
         fill_in 'task_task_name', with: 'yarukoto'
         fill_in 'task_content', with: 'kontento'
         select"完了", from: "task_status"
         select"高", from: "task_priority"
-        # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
-        # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-        click_on 'commit'
-        # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
-        # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
-        # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
+        click_on '登録する'
+        click_on '一覧に戻る'
+        
         expect(page).to have_content 'yarukoto'
         expect(page).to have_content 'kontento'
         expect(page).to have_content '完了'

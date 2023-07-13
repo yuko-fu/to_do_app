@@ -10,6 +10,7 @@
   <%= @task.content %>
 </p>
 
+
 <p>
   <strong>End_date:</strong>
   <%= @task.end_date %>
@@ -23,5 +24,12 @@
 <p>
   <strong>Priority:</strong>
   <%= @task.priority %>
+</p>
+
+<p>
+  <strong>label:</strong>
+  <% @task.labels.each do |label| %>
+    <%= label.name %>
+  <% end %>
 </p>
 <%= link_to '一覧に戻る', tasks_path %>
