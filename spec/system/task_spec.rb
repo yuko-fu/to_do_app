@@ -64,7 +64,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         sleep(1)
         fill_in 'task_task_name', with: 'テスト'
         fill_in 'task_content', with: 'テストコンテント'
-        check "label1"
+        check "label3"
         select"完了", from: "task_status"
         select"高", from: "task_priority"
         
@@ -73,7 +73,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         
         sleep(1)
         click_on '一覧に戻る'
-        expect(page).to have_content "label1"
+        expect(page).to have_content "label3"
       end
     end
   end
