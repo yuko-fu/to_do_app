@@ -22,7 +22,7 @@ class TasksController < ApplicationController
         @tasks = @tasks.status_search(params[:task][:status])
       end
     end    
-    if params[:task][:label_id].present?
+    if params[:task].present? && params[:task][:label_id].present?
       @tasks = @tasks.joins(:labels).where(labels: { id: params[:task][:label_id] })
     end
   end
